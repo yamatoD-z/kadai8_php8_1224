@@ -5,15 +5,9 @@
  * require_onceでfuncs.phpを取得
  * 関数を使えるようにする。
  */
-try {
-    $db_name = 'gs_db3';    //データベース名
-    $db_id   = 'root';      //アカウント名
-    $db_pw   = '';      //パスワード：MAMPは'root'
-    $db_host = 'localhost'; //DBホスト
-    $pdo = new PDO('mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host, $db_id, $db_pw);
-} catch (PDOException $e) {
-    exit('DB Connection Error:' . $e->getMessage());
-}
+require_once('funcs.php');
+$pdo = db_conn('cs_db', 'root', '', 'localhost');
+
 
 //２．データ登録SQL作成
 $stmt = $pdo->prepare('SELECT * FROM gs_an_table;');
@@ -29,7 +23,14 @@ if ($status === false) {
         //GETデータ送信リンク作成
         // <a>で囲う。
         $view .= '<p>';
+        $view .= '<a href="detail.php?id=' . $result['id'] . '">';
         $view .= $result['indate'] . '：' . $result['name'];
+        $view .= '</a>';
+        
+        $view .= '<a href="delete.php?id=' . $result['id'] . '">';
+        $view .= '[ 削除 ]';
+        $view .= '</a>';
+
         $view .= '</p>';
     }
 }
@@ -47,10 +48,10 @@ if ($status === false) {
     <link rel="stylesheet" href="css/range.css">
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <style>
-        div {
-            padding: 10px;
-            font-size: 16px;
-        }
+    div {
+        padding: 10px;
+        font-size: 16px;
+    }
     </style>
 </head>
 

@@ -17,7 +17,7 @@ $id = $_POST['id'];
 //2. DB接続します
 //*** function化する！  *****************
 try {
-    $db_name = 'gs_db3'; //データベース名
+    $db_name = 'cs_db'; //データベース名
     $db_id   = 'root'; //アカウント名
     $db_pw   = ''; //パスワード：MAMPは'root'
     $db_host = 'localhost'; //DBホスト

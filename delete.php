@@ -4,15 +4,18 @@ $id = $_GET['id'];
 
 //2. DB接続します
 //*** function化する！  *****************
-try {
-    $db_name = 'gs_db3'; //データベース名
-    $db_id   = 'root'; //アカウント名
-    $db_pw   = ''; //パスワード：MAMPは'root'
-    $db_host = 'localhost'; //DBホスト
-    $pdo = new PDO('mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host, $db_id, $db_pw);
-} catch (PDOException $e) {
-    exit('DB Connection Error:' . $e->getMessage());
-}
+// try {
+//     $db_name = 'cs_db'; //データベース名
+//     $db_id   = 'root'; //アカウント名
+//     $db_pw   = ''; //パスワード：MAMPは'root'
+//     $db_host = 'localhost'; //DBホスト
+//     $pdo = new PDO('mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host, $db_id, $db_pw);
+// } catch (PDOException $e) {
+//     exit('DB Connection Error:' . $e->getMessage());
+// }
+
+require_once('funcs.php');
+$pdo = db_conn('cs_db', 'root', '', 'localhost');
 
 //３．データ登録SQL作成
 $stmt = $pdo->prepare('DELETE FROM gs_an_table WHERE id = :id');

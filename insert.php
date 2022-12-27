@@ -7,7 +7,7 @@ $age    = $_POST['age'];
 $content = $_POST['content'];
 
 require_once('funcs.php');
-$pdo = db_conn();
+$pdo = db_conn('cs_db', 'root', '', 'localhost');
 
 //３．データ登録SQL作成
 $stmt = $pdo->prepare(
