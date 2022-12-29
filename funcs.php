@@ -6,9 +6,7 @@ function h($str)
 }
 
 //DB接続関数：db_conn() 
-//※関数を作成し、内容をreturnさせる。
-//※ DBname等、今回の授業に合わせる。
-
+//関数の仕様を微調整
 function db_conn($db_name,$db_id, $db_pw, $db_host)
 {
     try {
