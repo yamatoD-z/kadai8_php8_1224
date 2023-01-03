@@ -1,37 +1,43 @@
 <?php
-//【重要】
-/**
- * DB接続のための関数をfuncs.phpに用意
- * require_onceでfuncs.phpを取得
- * 関数を使えるようにする。
- */
-require_once('funcs.php');
-$pdo = db_conn('cs_db', 'root', '', 'localhost');
 
+function h($str)
+{
+    return htmlspecialchars($str, ENT_QUOTES);
+}
 
-//２．データ登録SQL作成
-$stmt = $pdo->prepare('SELECT * FROM gs_an_table;');
+//1.  DB接続します
+try {
+    //Password:MAMP='root',XAMPP=''
+    $pdo = new PDO('mysql:dbname=eigo;charset=utf8;host=localhost', 'root', '');
+} catch (PDOException $e) {
+    exit('DBConnectError'.$e->getMessage());
+}
+
+//２．データ取得SQL作成
+
+// 出現回数の降順で出力
+$stmt = $pdo->prepare("SELECT * FROM tangocount ORDER BY count DESC;");
 $status = $stmt->execute();
 
-//３．データ表示
-$view = '';
-if ($status === false) {
-    $error = $stmt->errorInfo();
-    exit('SQLError:' . print_r($error, true));
-} else {
-    while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {
-        //GETデータ送信リンク作成
-        // <a>で囲う。
-        $view .= '<p>';
-        $view .= '<a href="detail.php?id=' . $result['id'] . '">';
-        $view .= $result['indate'] . '：' . $result['name'];
-        $view .= '</a>';
-        
-        $view .= '<a href="delete.php?id=' . $result['id'] . '">';
-        $view .= '[ 削除 ]';
-        $view .= '</a>';
 
-        $view .= '</p>';
+//３．データ表示
+$view="";
+if ($status==false) {
+    //execute（SQL実行時にエラーがある場合）
+    $error = $stmt->errorInfo();
+    exit("ErrorQuery:".$error[2]);
+} else {
+    // elseの中は、SQL実行成功した場合
+    //Selectデータの数だけ自動でループしてくれる
+    //FETCH_ASSOC=http://php.net/manual/ja/pdostatement.fetch.php
+    
+    // SQLのデータをテーブル形式で出力。単語出現回数の累計を追加。
+    $int=0;
+    $acCount=0;
+    while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {        
+        $acCount = $acCount+h($result['count']);
+      $view .= '<tr>' . '<td>' . $int . '</td>'. '<td>' . $result['id'] . '</td>' .'<td>' .  h($result['word']) .'</td>' .  '<td>'  . h($result['count']) . '</td>'  . '<td>'  .$acCount . '</td>' . '</tr>';
+        $int++;
     }
 }
 ?>
@@ -71,8 +77,17 @@ if ($status === false) {
     <!-- Main[Start] -->
     <div>
         <div class="container jumbotron">
-            <a href="detail.php"></a>
-            <?= $view ?>
+            <table border="1">
+                <tr>
+                    <th>No</th>
+                    <th>id</th>
+                    <th>word</th>
+                    <th>count</th>
+                    <th>累計count</th>
+
+                </tr>
+                <?= $view ?>
+            </table>
         </div>
     </div>
     <!-- Main[End] -->
