@@ -12,7 +12,7 @@ $pdo = db_conn();
 //２．データ取得SQL作成
 
 // 出現回数の降順で出力
-$stmt = $pdo->prepare("SELECT * FROM tangocount ORDER BY count DESC;");
+$stmt = $pdo->prepare("SELECT * FROM tangocount ORDER BY word ASC;");
 $status = $stmt->execute();
 
 
@@ -39,7 +39,7 @@ if ($status==false) {
       .  '<td>'  . h($result['count']) . '</td>'  
       .  '<td>'  . h($result['content']) . '</td>' 
       . '<td>'  .$acCount . '</td>' 
-      . '<td>'  .'<a href="delete.php?id=' . $result['id'] . '">' . '  [削除]' . '</a>'. '</td>' 
+      . '<td>'  .'<a href="deleteABC.php?id=' . $result['id'] . '">' . '  [削除]' . '</a>'. '</td>' 
 
       . '</tr>'
       
@@ -88,10 +88,8 @@ if ($status==false) {
                 <tr>
                     <th>No</th>
                     <th>id</th>
-                    <th>
-                        <a href="selectABC.php"> word (クリックすると降順で並び替え）</a>
-                    </th>
-                    <th>count</th>
+                    <th>word</th>
+                    <th><a href="select.php">count(出現回数降順で表示）</a></th>
                     <th>備考</th>
                     <th>累計count</th>
 
