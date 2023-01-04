@@ -1,5 +1,6 @@
 <?php
 
+require_once('funcs.php');
 //PHP:コード記述/修正の流れ
 //1. insert.phpの処理をマルっとコピー。
 //2. $id = $_POST["id"]を追加
@@ -20,7 +21,7 @@ $pdo = db_conn();
 
 
 //３．データ登録SQL作成
-$stmt = $pdo->prepare('UPDATE tangocount SET word = :word, count = :count, source = :source, content = :content, indate = sysdate() WHERE id = :id;');
+$stmt = $pdo->prepare('UPDATE tangocount SET word = :word, count = :count, source = :source, content = :content WHERE id = :id;');
 
 // 数値の場合 PDO::PARAM_INT
 // 文字の場合 PDO::PARAM_STR

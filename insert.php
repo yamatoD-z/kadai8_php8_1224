@@ -1,13 +1,6 @@
 <?php
 
 require_once('funcs.php');
-/**
- * 1. index.phpのフォームの部分がおかしいので、ここを書き換えて、
- * insert.phpにPOSTでデータが飛ぶようにしてください。
- * 2. insert.phpで値を受け取ってください。
- * 3. 受け取ったデータをバインド変数に与えてください。
- * 4. index.phpフォームに書き込み、送信を行ってみて、実際にPhpMyAdminを確認してみてください！
- */
 
 //1. POSTデータ取得
 $sentence = $_POST['sentence'];
@@ -16,7 +9,6 @@ $source = $_POST['source'];
 //２. 単語数カウントの処理
 // A.　すべて小文字に
 $smallSentence = strtolower($sentence);
-// echo $smallsentence;
 
 // B.一般語を削除（キリがなくなったので記号だけ）
 $replaceSpeCha = 
@@ -35,21 +27,9 @@ $smallSentence = str_replace("ns ", "n ", $smallSentence);
 
 // C.　配列化
 $wordarray = explode(" ", $smallSentence);
-// print_r($array);
 
 // D.配列内の同じ要素をカウント。関数が勝手に連想配列を作ってくれる。
 $countarray = array_count_values($wordarray);
-// print_r($countarray);
-
-// $word=[];
-// $count=[];
-// foreach($countarray as $key => $value){
-//     $word .=$key;
-//     $count .=$value;
-// }
-
-// print_r($word);
-// print_r($value);
 
 //2. DB接続します
 $pdo = db_conn();

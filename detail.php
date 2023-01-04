@@ -29,11 +29,6 @@ $result = $stmt->fetch();
 ?>
 <!--
 ２．HTML
-以下にindex.phpのHTMLをまるっと貼り付ける！
-(入力項目は「登録/更新」はほぼ同じになるから)
-※form要素 input type="hidden" name="id" を１項目追加（非表示項目）
-※form要素 action="update.php"に変更
-※input要素 value="ここに変数埋め込み"
 -->
 <!DOCTYPE html>
 <html lang="ja">
@@ -64,10 +59,11 @@ $result = $stmt->fetch();
         <div class="jumbotron">
             <fieldset>
                 <legend>詳細</legend>
-                <label>単語：<input type="text" name="word" value="<?= $result['word']?>"></label><br>
-                <label>出現回数：<input type="text" name="count" value="<?= $result['count']?>"></label><br>
-                <label>出展：<input type="text" name="source" value="<?= $result['source']?>"></label><br>
-                <label><textarea name="content" rows="4" cols="40"><?= $result['content']?></textarea></label><br>
+                <label>単語：<br><input type="text" name="word" value="<?= $result['word']?>"></label><br>
+                <label>出現回数：<br><input type="text" name="count" value="<?= $result['count']?>"></label><br>
+                <label>出展：<br><input type="text" name="source" value="<?= $result['source']?>"></label><br>
+                <label>備考：<br><textarea name="content" rows="4"
+                        cols="40"><?= $result['content']?></textarea></label><br>
                 <input type="hidden" name="id" value="<?= $result['id']?>">
                 <input type="submit" value="修正">
             </fieldset>
