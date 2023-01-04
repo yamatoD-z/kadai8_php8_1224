@@ -8,32 +8,25 @@
 //   bindValueにも「id」の項目を追加
 //4. header関数"Location"を「select.php」に変更
 //1. POSTデータ取得
-$name   = $_POST['name'];
-$email  = $_POST['email'];
-$age    = $_POST['age'];
-$content = $_POST['content'];
+$word   = $_POST['word'];
+$count  = $_POST['count'];
+$source    = $_POST['source'];
+$content    = $_POST['content'];
 $id = $_POST['id'];
 
 //2. DB接続します
 //*** function化する！  *****************
-try {
-    $db_name = 'cs_db'; //データベース名
-    $db_id   = 'root'; //アカウント名
-    $db_pw   = ''; //パスワード：MAMPは'root'
-    $db_host = 'localhost'; //DBホスト
-    $pdo = new PDO('mysql:dbname=' . $db_name . ';charset=utf8;host=' . $db_host, $db_id, $db_pw);
-} catch (PDOException $e) {
-    exit('DB Connection Error:' . $e->getMessage());
-}
+$pdo = db_conn();
+
 
 //３．データ登録SQL作成
-$stmt = $pdo->prepare('UPDATE gs_an_table SET name = :name, email = :email, age = :age, content = :content, indate = sysdate() WHERE id = :id;');
+$stmt = $pdo->prepare('UPDATE tangocount SET word = :word, count = :count, source = :source, content = :content, indate = sysdate() WHERE id = :id;');
 
 // 数値の場合 PDO::PARAM_INT
 // 文字の場合 PDO::PARAM_STR
-$stmt->bindValue(':name', $name, PDO::PARAM_STR);
-$stmt->bindValue(':email', $email, PDO::PARAM_STR);
-$stmt->bindValue(':age', $age, PDO::PARAM_INT); //PARAM_INTなので注意
+$stmt->bindValue(':word', $word, PDO::PARAM_STR);
+$stmt->bindValue(':count', $count, PDO::PARAM_INT);
+$stmt->bindValue(':source', $source, PDO::PARAM_STR);
 $stmt->bindValue(':content', $content, PDO::PARAM_STR);
 $stmt->bindValue(':id', $id, PDO::PARAM_INT); //PARAM_INTなので注意
 

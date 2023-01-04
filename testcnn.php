@@ -63,6 +63,8 @@ foreach($arrayFullLink as $URL){
     $title = $titleCnn ->nodeValue;
   };
 
+  $article = mb_convert_encoding($article,"Shift-JIS");
+
   
   $time = date('Y-m-d H:i:s');
   $file = fopen('cnn.txt', 'a');

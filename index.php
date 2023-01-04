@@ -34,7 +34,7 @@
 <!-- 課題用には初めから文章を出力した状態に。コードの中に打ち込むのも汚いので、テキストファイルから。 -->
                     <?php echo file_get_contents('cnn.txt')?>
                     </textArea></label><br>
-                <label>出展：<input type="text" name="source" value="Influence"></label><br>
+                <label>出展：<input type="text" name="source" value="CNN 2023/1/4"></label><br>
                 <input type="submit" value="送信">
             </fieldset>
         </div>

@@ -10,10 +10,10 @@
 $id = $_GET['id'];
 
 require_once('funcs.php');
-$pdo = db_conn('cs_db', 'root', '', 'localhost');
+$pdo = db_conn();
 
 
-$stmt = $pdo->prepare('SELECT * FROM gs_an_table WHERE id = :id;');
+$stmt = $pdo->prepare('SELECT * FROM tangocount WHERE id = :id;');
 $stmt->bindValue(':id', $id, PDO::PARAM_INT); //PARAM_INTなので注意
 $status = $stmt->execute();
 
@@ -64,9 +64,9 @@ $result = $stmt->fetch();
         <div class="jumbotron">
             <fieldset>
                 <legend>詳細</legend>
-                <label>名前：<input type="text" name="name" value="<?= $result['name']?>"></label><br>
-                <label>Email：<input type="text" name="email" value="<?= $result['email']?>"></label><br>
-                <label>年齢：<input type="text" name="age" value="<?= $result['age']?>"></label><br>
+                <label>単語：<input type="text" name="word" value="<?= $result['word']?>"></label><br>
+                <label>出現回数：<input type="text" name="count" value="<?= $result['count']?>"></label><br>
+                <label>出展：<input type="text" name="source" value="<?= $result['source']?>"></label><br>
                 <label><textarea name="content" rows="4" cols="40"><?= $result['content']?></textarea></label><br>
                 <input type="hidden" name="id" value="<?= $result['id']?>">
                 <input type="submit" value="修正">

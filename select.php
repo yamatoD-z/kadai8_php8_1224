@@ -6,12 +6,8 @@ function h($str)
 }
 
 //1.  DB接続します
-try {
-    //Password:MAMP='root',XAMPP=''
-    $pdo = new PDO('mysql:dbname=eigo;charset=utf8;host=localhost', 'root', '');
-} catch (PDOException $e) {
-    exit('DBConnectError'.$e->getMessage());
-}
+require_once('funcs.php');
+$pdo = db_conn();
 
 //２．データ取得SQL作成
 
@@ -36,7 +32,18 @@ if ($status==false) {
     $acCount=0;
     while ($result = $stmt->fetch(PDO::FETCH_ASSOC)) {        
         $acCount = $acCount+h($result['count']);
-      $view .= '<tr>' . '<td>' . $int . '</td>'. '<td>' . $result['id'] . '</td>' .'<td>' .  h($result['word']) .'</td>' .  '<td>'  . h($result['count']) . '</td>'  . '<td>'  .$acCount . '</td>' . '</tr>';
+      $view .= '<tr>' 
+      . '<td>' . $int . '</td>'
+      . '<td>' . $result['id'] . '</td>' 
+      .'<td>' .'<a href="detail.php?id=' . $result['id'] . '">' .  h($result['word']). '</a>' .'</td>' 
+      .  '<td>'  . h($result['count']) . '</td>'  
+      .  '<td>'  . h($result['content']) . '</td>' 
+      . '<td>'  .$acCount . '</td>' 
+      . '<td>'  .'<a href="delete.php?id=' . $result['id'] . '">' . '  [削除]' . '</a>'. '</td>' 
+
+      . '</tr>'
+      
+      ;
         $int++;
     }
 }
@@ -83,6 +90,7 @@ if ($status==false) {
                     <th>id</th>
                     <th>word</th>
                     <th>count</th>
+                    <th>備考</th>
                     <th>累計count</th>
 
                 </tr>
